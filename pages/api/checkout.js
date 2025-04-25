@@ -13,9 +13,7 @@ export default async function handler(req, res) {
       line_items: req.body.items.map((item) => ({
         price_data: {
           currency: 'usd',
-          product_data: {
-            name: item.name,
-          },
+          product_data: { name: item.name },
           unit_amount: parseInt(item.price.replace('$', '')) * 100,
         },
         quantity: 1,
@@ -25,7 +23,7 @@ export default async function handler(req, res) {
       cancel_url: `${req.headers.origin}/cancel`,
     });
 
-    console.log("Stripe session created:", session.id); // ✅ Debug
+    console.log("Stripe session created:", session.id); // ✅ Log it
     res.status(200).json({ id: session.id });
   } catch (error) {
     console.error("Stripe error:", error.message);
