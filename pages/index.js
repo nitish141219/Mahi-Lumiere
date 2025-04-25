@@ -7,7 +7,8 @@ const products = [
   {
     id: 1,
     name: "Coconut Ghee Luxury Soap",
-    description: "A nourishing blend of coconut oil, buffalo ghee, and castor oil infused with vitamins A, D, and E.",
+    description:
+      "A nourishing blend of coconut oil, buffalo ghee, and castor oil infused with vitamins A, D, and E.",
     price: "$18",
     image: "/images/soap1.jpg",
   },
@@ -29,7 +30,15 @@ export default function Home() {
       },
       body: JSON.stringify({ items: cart }),
     });
+
     const session = await response.json();
+    console.log("Session:", session); // ✅ Debug session response
+
+    if (!session.id) {
+      alert("Checkout session creation failed. Check logs for details.");
+      return;
+    }
+
     await stripe.redirectToCheckout({ sessionId: session.id });
   };
 
@@ -51,7 +60,9 @@ export default function Home() {
               <h2 className="text-xl font-semibold text-yellow-800">
                 {product.name}
               </h2>
-              <p className="text-sm text-gray-600 mb-2">{product.description}</p>
+              <p className="text-sm text-gray-600 mb-2">
+                {product.description}
+              </p>
               <p className="text-lg font-bold text-yellow-700">{product.price}</p>
               <button
                 className="mt-2 bg-yellow-600 text-white px-4 py-2 rounded-xl"
