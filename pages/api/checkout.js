@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: req.body.items.map((item) => ({
+      line_items: req.body.items.map(item => ({
         price_data: {
           currency: 'usd',
           product_data: { name: item.name },
@@ -23,7 +23,6 @@ export default async function handler(req, res) {
       cancel_url: `${req.headers.origin}/cancel`,
     });
 
-    console.log("Stripe session created:", session.id); // ✅ Log it
     res.status(200).json({ id: session.id });
   } catch (error) {
     console.error("Stripe error:", error.message);
