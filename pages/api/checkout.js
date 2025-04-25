@@ -1,5 +1,11 @@
 import Stripe from 'stripe';
 
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
